@@ -58,7 +58,7 @@ git reset --hard HEAD [+版本号]
 
 rm [+filename]	删除文件，可直接commit，或误删了用git checkout [+filename]重新检出该文件，前提是删除了还没commit
 
-
+touch re.md	Linux touch命令用于修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件。
 
 
 
