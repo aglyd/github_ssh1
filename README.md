@@ -11,7 +11,7 @@ git remote set-url origin +url   更改远程仓库关联
 或git config -e
 
 直接编辑更改其中origin的url保存即可
-
+ 
 
 
 git clone [+url]	克隆项目当当前目录下，会生成一个项目名文件，克隆项目不需git init和关联远程仓库
