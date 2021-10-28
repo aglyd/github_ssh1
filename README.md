@@ -72,3 +72,36 @@ touch re.md	Linux touch命令用于修改文件或者目录的时间属性，包
 4. 切换回主分支(master)。
 5. 合并dev分支，使用命令 git merge –no-ff -m “注释” dev
 6. 查看历史记录
+
+git config:
+git config --list   列出Git可以在该处找到的所有的设置
+在git中，我们使用git config 命令用来配置git的配置文件，git配置级别主要有以下3类：
+1、仓库级别 local 【优先级最高】
+2、用户级别 global【优先级次之】
+3、系统级别 system【优先级最低】
+git config -l 查看配置
+git config --local -l 查看仓库配置【必须要进入到具体的目录下，比如要查看TestGit仓库的配置信息】
+git config --global -l 查看用户配置
+git config --system -l 查看系统配置
+
+git config -e 编辑配置文件:
+git config --local -e 编辑仓库级别配置文件
+git config --global -e 编辑用户级别配置文件
+git config --system -e 编辑系统级别配置文件
+
+git config 添加配置项目:
+git config --global user.email “you@example.com”
+git config --global user.name “Your Name”
+如果你希望在一个特定的项目中使用不同的名称或e-mail地址，你可以在该项目中运行该命令而不要--global选项。
+
+配置客户端长期存储用户各和密码,长期存储密码：
+git config --global credential.helper store
+获取帮助
+git help <verb>  
+git <verb> --help  
+man git-<verb>  
+
+vim编辑模式：
+同Linux编辑模式
+vim编辑器若处于不可编辑状态，输入字母 c 可以进入编辑状态
+修改完之后按esc键退出编辑状态，再按大写ZZ就可以保存退出vim编辑器。vim操作符中说的 qw 可以保存并退出，或先按w再按q
