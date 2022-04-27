@@ -304,7 +304,51 @@ git config --global user.email [email]         如：git config --global user.em
 
 1）在file->Settings->Passwords下在Do not save,forget passwords after restart前打勾。
 
-2）在控制面板的凭据管理器中找到windows凭据，将git的密码修改成已经改过的新密码（操作完后保险起见可以重启一下机器）。
+2）在控制面板的凭据管理器中找到**windows凭据**，将git的密码修改成已经改过的新密码（操作完后保险起见可以重启一下机器）。
 
 3)如果是第三条原因引起的就该寻求一下解锁账户的方法了（每个公司可能都不太一样，我们用自己的工作app根据提示解锁一下就行，相当于验证一下是本人。有的公司可能需要找一下运维的同事给解锁一下）。
 
+
+
+----
+
+# [git 查看暂存区](https://blog.51cto.com/u_15127661/4597316)
+
+ 一、总结
+一句话总结：
+git ls-files 命令是用来查看暂存区中文件信息
+
+
+
+
+二、git 查看暂存区
+一、简介
+
+git ls-files 命令是用来查看暂存区中文件信息
+
+二、常用参数
+
+参数说明（括号里是简写）
+
+--cached(**-c**)显示暂存区中的文件，git ls-files (-c)命令**默认的参数**
+--deleted(**-d**)显示删除的文件,git ls-files -d
+--modified(**-m**) 显示修改过的文件
+--other(**-o**)显示没有被git跟踪的文件
+--stage(**-s**) 显示mode以及文件对应的Blob对象，进而我们可以获取暂存区中对应文件里面的内容。
+二、实例
+1.如何查看暂存区中有哪些文件？
+
+**git ls-files**
+
+
+
+2.如何查看暂存区中bb.txt文件内容是什么？
+
+首先，我们需要查查bb.txt文件对应的Blob对象，如下：
+
+**git ls-files -s -- bb.txt** 或者直接 **git ls-files -s**
+
+然后通过Blob对象，查询bb.txt里面的内容：
+
+git cat-file -p 6cef
+![git 查看暂存区_人工智能_04](README.assets/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=.png)
