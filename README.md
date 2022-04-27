@@ -175,3 +175,136 @@ Git 的 “master” 分支并不是一个特殊分支。 它就跟其它分支�
 另一种方法是：**git push -u origin master**。同样根据自己的需要，替换origin【远端】和master【本地】。
 两个命令的区别是第一条命令是要保证你的远程分支存在，如果不存在，也就无法进行关联。而第二条指令即使远程没有你要关联的分支，它也会自动创建一个出来，以实现关联。
 
+
+
+---
+
+# [git中的撤销、删除操作总结（git clean、git checkout和git reset）](https://www.csdn.net/tags/MtTaUgwsMjM2NTMtYmxvZwO0O0OO0O0O.html)
+
+## 1. 删除未跟踪的文件-git clean
+
+如下所示，`test.cpp`为新建文件，它属于未跟踪的文件。使用`git clean`从你的工作目录中删除所有没有tracked，没有被管理过的文件。`删除了就找不回了，一定要慎用。`
+![在这里插入图片描述](README.assets/70aae26552a54b89a118cca831582203.png)
+使用`git clean -h`查看参数意义：
+
+```bash
+    -q, --quiet           不打印删除文件的名称
+    -n, --dry-run         演习
+    -f, --force           强制
+    -i, --interactive     交互式清除
+    -d                    删除整个目录
+    -e, --exclude <模式>  添加 <模式> 到忽略规则
+    -x                    也删除忽略的文件
+    -X                    只删除忽略的文件
+```
+
+这里的忽略文件指的是`gitignore`。如果担心误删，建议每次使用git clean时候，最好`加上交互式参数i，避免误删`。
+
+## 2. 已修改，未暂存-git checkout/git reset
+
+下列master.txt是被修改过的文件，但是还没有加入暂存区，也就是没有使用`git add`操作，此时如果不想要这个修改，可以使用`git checkout`删除此次修改，恢复到修改之前的状态。
+![在这里插入图片描述](README.assets/9446f8bd60164767b93e581e9787d02b.png)
+使用方式：
+
+```bash
+#方法一：删除master.txt的修改
+git checkout master.txt
+
+#方法二：删除所有修改
+git checkout .
+
+#方法三：回退
+git reset --hard
+```
+
+## 3. 已暂存，未提交-git reset
+
+下列master.txt，已经提交`git add`，但是没有`git commit`。
+
+![在这里插入图片描述](README.assets/0c2a607e67e54032bff53bc07ee8860c.png)
+此时如果想要删除此次已经提交的修改，也就是说`暂存区的内容不想要了`，或者只是想要把暂存区的内容还原至修改的状态。可以使用下列的一些命令：
+
+```bash
+#方法一：删除暂存区和修改的工作区
+git reset --hard
+
+#方法二：只是把暂存区回退至修改的状态
+git reset HEAD
+
+#方法三：只是把暂存区回退至修改的状态
+git reset HEAD file.txt
+```
+
+## 4. 已提交，未推送-git reset
+
+如果已经进行至`git commit`，但是还没有push至远程，这种情况直接回退版本就可以了。
+
+```bash
+#方法一：回退至上一版本
+git reset HEAD^
+#注意 HEAD 就是回退到当前版本，git reset HEAD^ 回退到上一版本
+
+#方法二：回退至指定版本 
+git reset <版本号> #git log 去查版本号
+
+# 方法三：只是撤销commit，撤回至git add的状态，结合第4步可以回退至修改前的版本
+git reset --soft HEAD^
+
+# 方法四：使用远程仓库覆盖本地仓库
+git reset --hard origin/master 
+```
+
+## 5. 已推送的修改
+
+如果把本地的代码push至远程，此时可以采用回滚的形式回退版本，然后强制推送覆盖远程仓库。
+
+以此执行下列代码：
+
+```python
+git reset --hard HEAD^ #回退至上一版本
+git push origin HEAD --force #强制提交一次，之前错误的提交就从远程仓库删除
+```
+
+如果还想要找回之前的修改，可以使用`git reflog`，或者结合第四步一起使用。
+
+
+
+---
+
+# Authentication failed for错误解决
+
+出现这种问题可能有以下几点：
+
+1）git的密码输入错误（本质），当然在知道用户名密码的情况下都输错的低级错误那就不说了。
+
+2）git的密码修改后而未及时修改为新的密码，导致出错。
+
+3）git的账户被锁定。这个也是本人出错的原因，这儿跟大家分享一下解决方法。
+
+首先，先查看有没有设置全局变量以及配置的全局变量对不对，如果不对的话就重新设置一下。
+
+查询用户信息：git config --list
+
+//查看一下你的信息修改的信息对不对
+
+```
+user.name=yuhua
+user.email=xxx@xxx.com
+```
+
+如果不对就重新配置一下：
+
+git config --global user.name [username]  如：git config --global user.name yh
+
+git config --global user.email [email]         如：git config --global user.email 111@163.com
+
+如果，是因为第二条原因出现的错误，那么我们就重新输入一下用户名及修改后的新密码：
+
+我们需要做如下操作（idea工具下操作）
+
+1）在file->Settings->Passwords下在Do not save,forget passwords after restart前打勾。
+
+2）在控制面板的凭据管理器中找到windows凭据，将git的密码修改成已经改过的新密码（操作完后保险起见可以重启一下机器）。
+
+3)如果是第三条原因引起的就该寻求一下解锁账户的方法了（每个公司可能都不太一样，我们用自己的工作app根据提示解锁一下就行，相当于验证一下是本人。有的公司可能需要找一下运维的同事给解锁一下）。
+
