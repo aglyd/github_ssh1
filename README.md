@@ -34,7 +34,7 @@ git merge [+分支名]	将某分支合并到当前分支，注意要先切换到
 
 
 
-git add [+filename1 filename2....]    添加文件到版本库
+git add [+filename1 filename2....]    添加文件/文件夹到版本库，可用相对路径，例如：git add ./src，会将当前路径下的src的所有文件add进去。
 
 git status  查看有哪些本地文件改动了可commit
 
@@ -74,7 +74,7 @@ git rm --cached + [文件路径]，不删除物理文件，仅将该文件从缓
 
 git rm --f + [文件路径]，不仅将该文件从缓存中删除，还会将物理文件删除（不会回收到垃圾桶）。
 
-git rm -r --cached +[目录路径]，递归删除已经add到暂存区但还没commit的目录
+git rm -r --cached +[目录路径]，递归删除已经add到暂存区但还没commit的目录，路径可用相对路径，如--cached ./src，删除当前路径下的src目录下所有文件。
 
 请问 git rm --cache 和 git reset HEAD 的区别到底在哪里呢？
 如果要删除文件，最好用 git rm file_name，而不应该直接在工作区直接 rm file_name。
