@@ -352,3 +352,27 @@ git ls-files 命令是用来查看暂存区中文件信息
 
 git cat-file -p 6cef
 ![git 查看暂存区_人工智能_04](README.assets/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=.png)
+
+
+
+# gitignore
+
+### 1)  gitignore文件
+
+  在git中如果想忽略掉某个文件，不让这个文件提交到版本库中，可以使用修改 .gitignore 文件的方法。这个文件每一行保存了一个匹配的规则例如：
+
+```
+# 此为注释 – 将被 Git 忽略
+*.a       # 忽略所有 .a 结尾的文件
+!lib.a    # 但 lib.a 除外
+/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+build/    # 忽略 build/ 目录下的所有文件
+doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+```
+
+### 2) gitignoreglobal全局忽略文件
+
+另外 git 提供了一个全局的 .gitignore，你可以在你的用户目录下创建 ~/.gitignoreglobal 文件，以同样的规则来划定哪些文件是不需要版本控制的。
+
+需要执行` git config --global core.excludesfile ~/.gitignoreglobal`来使得它生效。
+
